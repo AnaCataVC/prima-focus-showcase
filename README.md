@@ -1,19 +1,28 @@
-﻿# 🎯 Prima-Focus
+<div align="center">
+  <img src="assets/icon.png" width="120" alt="Prima-Focus Icon"/>
+  <h1>Prima-Focus</h1>
+</div>
 
-![Platform Android](https://img.shields.io/badge/Platform-Android-3DDC84?style=flat&logo=android)
-![Architecture Local-First](https://img.shields.io/badge/Architecture-Local--First-blue?style=flat)
-![Kotlin](https://img.shields.io/badge/Kotlin-0095D5?style=flat&logo=kotlin&logoColor=white)
-![Jetpack Compose](https://img.shields.io/badge/Jetpack_Compose-4285F4?style=flat&logo=android&logoColor=white)
-![Room](https://img.shields.io/badge/Room_Database-4CAF50?style=flat&logo=sqlite&logoColor=white)
-![License MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+<div align="center">
+  <img src="https://img.shields.io/badge/Platform-Android-3DDC84?style=flat&logo=android" alt="Platform Android">
+  <img src="https://img.shields.io/badge/Architecture-Local--First-blue?style=flat" alt="Architecture Local-First">
+  <img src="https://img.shields.io/badge/Kotlin-0095D5?style=flat&logo=kotlin&logoColor=white" alt="Kotlin">
+  <img src="https://img.shields.io/badge/Jetpack_Compose-4285F4?style=flat&logo=android&logoColor=white" alt="Jetpack Compose">
+  <img src="https://img.shields.io/badge/Room_Database-4CAF50?style=flat&logo=sqlite&logoColor=white" alt="Room">
+  <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License MIT">
+</div>
+
+<br>
 
 > **Note**: This repository serves as a **Showcase**. The complete source code is kept private, but you can explore the technical documentation and download the APK to try the app yourself!
 
-*🇬🇧 English version below | 🇪🇸 Versión en español abajo*
+<div align="center">
+  <a href="#english">English</a> | <a href="#español">Español</a>
+</div>
 
 ---
 
-## 🇬🇧 English
+## English
 
 ### 📝 Project Description
 **Prima-Focus** is a local-first task management application designed to help you focus on what truly matters. Built natively for Android, it uses an advanced predictive priority scoring system to dynamically select your "Today Task." All data is stored locally on the device for maximum privacy and performance.
@@ -47,7 +56,7 @@ Explore our comprehensive technical documentation to understand how Prima-Focus 
 
 ---
 
-## 🇪🇸 Español
+## Español
 
 ### 📝 Descripción del Proyecto
 **Prima-Focus** es una aplicación de gestión de tareas "local-first" diseñada para ayudarte a enfocarte en lo que realmente importa. Construida nativamente para Android, utiliza un avanzado sistema predictivo de puntuación de prioridad para seleccionar dinámicamente tu "Tarea de Hoy". Todos los datos se almacenan localmente en el dispositivo para garantizar máxima privacidad y rendimiento.
@@ -78,4 +87,3 @@ Explora nuestra documentación técnica completa para entender cómo funciona Pr
 - [Especificaciones de UI](docs/ui_spec.md)
 - [Notas de Implementación](docs/implementation_notes.md)
 - [Aprendizajes y Decisiones](docs/learning/)
-
