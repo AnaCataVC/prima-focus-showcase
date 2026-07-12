@@ -4,7 +4,7 @@
   "description": "Showcase landing page for Prima-Focus app",
   "scripts": {
     "dev": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch",
-    "build": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --minify"
+    "build:css": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --minify"
   },
   "devDependencies": {
     "tailwindcss": "^3.4.1"
