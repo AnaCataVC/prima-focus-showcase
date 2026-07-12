@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .glass {
+    @apply bg-prima-card/30 backdrop-blur-xl border border-white/10 shadow-xl;
+  }
+  .glass-card {
+    @apply bg-prima-card/40 backdrop-blur-md border border-white/5 rounded-2xl p-6 transition-all duration-300 hover:bg-prima-card/60 hover:border-prima-accent/30;
+  }
+}
+
+body {
+  background-color: #0f172a;
+  color: #f8fafc;
+  overflow-x: hidden;
+}
+
