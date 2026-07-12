@@ -5,10 +5,10 @@ module.exports = {
     extend: {
       colors: {
         prima: {
-          dark: '#0f172a',
-          card: '#1e293b',
-          accent: '#3b82f6',
-          accentGlow: '#60a5fa',
+          dark: '#050b10',
+          card: '#0d1624',
+          accent: '#2979ff',
+          accentGlow: '#00e5ff',
         }
       },
       animation: {
