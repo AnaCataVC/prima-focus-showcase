@@ -95,10 +95,13 @@ A subtle visual hint (e.g., a brief shimmer or bounce animation on first launch)
 - **Top Row**:
   - `OutlinedTextField` (weight=1f): transparent background, neon purple focused border, placeholder "¿Qué tienes en mente?" at 50% alpha.
   - FAB circular 56dp on the right: `primaryAccent` background, Send icon. Replaces the old "Guardar / Cancelar" buttons.
-- **Selectors Row**: `ExposedDropdownMenuBox` for Category and Subcategory side-by-side. `RoundedCornerShape(12dp)`, text in white, dropdown background in `backgroundEdge`.
-- **Quick Dates & Optional Defaults**:
-  - Two minimalist `FilterChip` buttons ("Hoy", "Mañana") to instantly set the due date.
-  - Optional `OutlinedTextField` fields for Minutes and Subtasks that inherit global defaults from Settings if left empty. Entering "0" in Minutes explicitly disables timing.
+- **Selectors Column**: `ExposedDropdownMenuBox` for Category and Subcategory stacked vertically. `RoundedCornerShape(12dp)`, text in white, dropdown background in `backgroundEdge`.
+- **Dates**:
+  - `FilterChip` buttons ("Hoy", "Mañana", "Siguiente Lunes") to instantly set the due date.
+  - An "Elegir fecha" `FilterChip` that opens a native `DatePickerDialog`.
+  - Tasks without a selected date are sent to the backlog unprogrammed.
+- **Minutes Input**:
+  - `OutlinedTextField` for estimated minutes, with a "Sin duración" `Checkbox` next to it. Checking it disables the input.
 
 ### Removed from original spec
 - ~~Mic icon / voice input~~ (discarded feature).
@@ -116,15 +119,15 @@ A subtle visual hint (e.g., a brief shimmer or bounce animation on first launch)
 - **Top Bar**: "HOY" label (white 60%) + sync status icon (right). Minimal.
 - **Task Card (center)**: Glass card pattern. Contains:
   - **Priority Badge (Pill)**: centered at top. Shows `Score: XX`. Error tint if score ≥ 70.
-  - **Project Warning**: Yellow banner stating "Proyecto grande — dividir en subtareas" if `isProject` is true (estimated > 120m).
+  - **Project Warning**: Yellow banner stating "Tarea muy larga — divídela en varias partes" if `isProject` is true (estimated > 120m).
   - **Task Title**: `headlineMedium`, white, max 2 lines with ellipsis.
-  - **Meta Row**: `category - subcategory • XX min` in `textSecondary`. If task has subtasks, shows a minimal "+X más" label instead of visual checkboxes.
+  - **Meta Row**: `category - subcategory • XX min` in `textSecondary`.
   - **Start FAB**: 80dp circle, `primaryAccent` bg, Play icon 40dp. "EMPEZAR" label below (bold, spaced).
   - **Secondary Actions**: A minimalist row of transparent icon buttons (Editar, Posponer) rendered discreetly under the EMPEZAR label.
 - **Empty State**: centered text "Tu Tarea Hoy aparecerá aquí" at 50% alpha.
 
 ### Removed from original spec
-- ~~Subtasks inline checkboxes~~ — simplified into a pure text label (`+X más subtareas`).
+- ~~Subtasks logic entirely removed~~.
 - ~~Day progress (X/Y completadas)~~ — removed to reduce cognitive load.
 - ~~Boost IconButton~~ — replaced by Swipe Right gesture.
 

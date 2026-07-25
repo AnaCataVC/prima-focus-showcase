@@ -1,21 +1,15 @@
-﻿## 🚀 Prima-Focus v1.0.0 - Initial Release
+# Release v1.1.0 🎉
 
-Welcome to the official showcase release of **Prima-Focus**! 🎯
+## 🇬🇧 English
+### 🚀 Features & Improvements
+* **Simplified Task Creation:** Removed the concept of "subtasks" in favor of a more streamlined approach. 
+* **Quicker Inputs:** Added a "No duration" (Sin duración) checkbox and an "El siguiente lunes" (Next Monday) quick date chip for faster task entry.
+* **Category Refinement:** Split the "salud" (health) subcategories into distinct "medicación" (medication) and "cita médica" (medical appointment) categories for better priority calculation.
+* **Priority Logic Tweaks:** Re-tuned the "large project" classification threshold and modernized the warnings on the home screen.
 
-This is the very first stable release of our local-first task management application. Prima-Focus is designed to eliminate distractions and help you focus on your most important tasks through an advanced predictive priority scoring system.
-
-### ✨ Features
-- **Local-First Architecture:** All your data is stored locally on your device ensuring maximum privacy.
-- **Dynamic Priority Scoring:** Automatically selects your "Today Task" based on predictive logic.
-- **Modern UI:** Built fully natively with Jetpack Compose following Material Design 3 guidelines.
-- **Reliable Notifications:** Powered by Android WorkManager and Foreground Services to keep you on track.
-
-### 📦 Installation Instructions
-1. Download the `prima-focus.apk` file attached below.
-2. Transfer it to your Android device (if downloading on desktop).
-3. Open the file on your device. You may be prompted to allow installation from "Unknown Sources".
-4. Install and start focusing on what truly matters!
-
-### 📚 Technical Documentation
-Since this is a showcase repository, the source code is kept private, pero you can explore our complete [Technical Documentation](https://github.com/AnaCataVC/prima-focus-showcase/tree/main/docs) to learn about the system architecture, database schema, and the UI/UX decisions made during development.
-
+## 🇪🇸 Español
+### 🚀 Funcionalidades y Mejoras
+* **Creación de Tareas Simplificada:** Se eliminó por completo la lógica de "subtareas" para ofrecer un flujo mucho más rápido y menos abrumador.
+* **Nuevos Controles:** Se añadió una casilla de "Sin duración" para ignorar el tiempo, y un selector rápido de "Siguiente Lunes".
+* **Refinamiento de Categorías:** Se separó la categoría médica en "medicación" y "cita médica" para que el motor de prioridades sea más preciso.
+* **Ajustes en Prioridades:** Se modificó el umbral de detección de proyectos largos y se actualizaron las advertencias visuales en la pantalla principal.
