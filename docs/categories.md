@@ -12,7 +12,8 @@ This table defines the standard categories, subcategories, and their respective 
 | | administrativo | 1.0 | false |
 | | revisión | 1.0 | false |
 | | documentación | 2.0 | false |
-| **salud** | medicación / citas | 4.0 | **true** |
+| **salud** | medicación | 4.0 | **true** |
+| | cita médica | 4.0 | **true** |
 | **amigos** | salud | 4.0 | false |
 | | comunicación | 2.0 | false |
 | | favores | 2.0 | false |
