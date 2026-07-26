@@ -29,7 +29,7 @@
 
 ### 🚀 Live Demo / Download
 You can download the latest version of the app directly from the [Releases](https://github.com/AnaCataVC/prima-focus-showcase/releases) tab:
-👉 **[Download APK (v1.2.1)](https://github.com/AnaCataVC/prima-focus-showcase/releases/latest)**
+👉 **[Download APK (v1.2.2)](https://github.com/AnaCataVC/prima-focus-showcase/releases/latest)**
 
 ### 🛠️ Technologies Used
 - **Language**: Kotlin
@@ -63,7 +63,7 @@ Explore our comprehensive technical documentation to understand how Prima-Focus 
 
 ### 🚀 Descarga y Demo
 Puedes descargar la última versión de la aplicación directamente desde la pestaña de [Releases](https://github.com/AnaCataVC/prima-focus-showcase/releases):
-👉 **[Descargar APK (v1.2.1)](https://github.com/AnaCataVC/prima-focus-showcase/releases/latest)**
+👉 **[Descargar APK (v1.2.2)](https://github.com/AnaCataVC/prima-focus-showcase/releases/latest)**
 
 ### 🛠️ Tecnologías Utilizadas
 - **Lenguaje**: Kotlin
