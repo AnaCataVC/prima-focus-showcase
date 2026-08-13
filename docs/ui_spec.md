@@ -9,6 +9,18 @@ Visual specifications aligned with the implemented design. Covers 5 screens + mo
 **Radical minimalism for neurodivergent brains.**
 Every element on screen must earn its place. No decorative buttons, no visual noise. The app's core interaction model relies on gestures and context rather than multiple visible controls, reducing micro-decisions and cognitive load. Once gestures become muscle memory, the mental overhead drops to zero — a key outcome for users with ADHD.
 
+## Responsive & Tablet Layout (WindowSizeClass)
+
+**Goal**: Optimize screen real estate for larger form factors without compromising the minimal aesthetic.
+
+### Layout Modalities
+- **Compact (Phones)**: Standard vertical flow.
+- **Expanded (Tablets)**: Implements a Split View architecture.
+  - **Left Pane (Navigation & Filters)**: Features a custom Interactive Calendar to visually filter tasks by date.
+  - **Right Pane (Content)**: Displays the focused task card or the Inbox modal content directly without obscuring the calendar context.
+
+> **Neurology Note:** Providing spatial memory through a fixed calendar pane on tablets reduces cognitive load compared to hiding filters behind menus or modals.
+
 ---
 
 ## Visual Design System (Tokens)

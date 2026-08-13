@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS tasks (
   status TEXT NOT NULL DEFAULT 'pending', -- pending|in_progress|completed|archived
   postponedReason TEXT,
   createdAt INTEGER NOT NULL, -- epoch ms
-  updatedAt INTEGER NOT NULL, -- epoch ms
+  updatedAt INTEGER NOT NULL, -- epoch ms (used for P2P Last-Write-Wins conflict resolution)
   meta TEXT
 );
 

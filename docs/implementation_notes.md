@@ -1,10 +1,11 @@
 # Implementation Notes
 
-## Local-First Strategy
+## Local-First Strategy & Synchronization
 The core tenet of Prima-Focus is privacy and speed. 
 - All modifications immediately persist to the Room Database (SQLite) on the Android device.
-- There is no cloud synchronization or background syncing queue.
-- No network connection is required to use the app.
+- There is no cloud synchronization or background syncing queue. No network connection is required to use the app.
+- **Local P2P Sync**: Devices can sync their state offline using the Google Nearby Connections API. Synchronization happens dynamically when devices (e.g., Phone and Tablet) are in proximity.
+- **Conflict Resolution**: Handled via a deterministic "Last-Write-Wins" strategy, utilizing the `updatedAt` timestamp to resolve divergent local states safely.
 
 ## Recurrence
 - Store rules in `RRULE` format in the `recurrence` field and generate local instances.
@@ -14,8 +15,9 @@ The core tenet of Prima-Focus is privacy and speed.
 - Strictly version the database schema.
 - Provide migrations in Room using `Migration` classes to handle schema updates without data loss.
 
-## UI Implementation
+## UI Implementation & Adaptive Layouts
 - The visual interface is natively built with **Jetpack Compose** following Material 3 guidelines and enforcing a Dark Mode aesthetic.
+- **Multi-Screen Support**: Utilizes `WindowSizeClass` to support adaptive scaling across form factors. Tablets (Expanded layout) feature a Split View interface with a custom Interactive Calendar that allows filtering tasks by date.
 - The Pomodoro timer relies on an Android `Foreground Service` (`TimerService`) to ensure persistence and reliability even when the app is backgrounded.
 
 ## Background Processing & Notifications
