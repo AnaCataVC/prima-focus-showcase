@@ -4,35 +4,32 @@ The core value of Prima-Focus is its deterministic and reproducible task priorit
 
 ## The Formula
 
-The Priority Score is calculated by splitting the factors into a **Base Score** (static importance/cost) and a **Dynamic Urgency** component:
+The Priority Score is calculated by splitting the factors into a **Base Score** (static importance) and a **Dynamic Urgency** component:
 
 `priorityScore = baseScore + dynamicUrgency + manualBoost`
 
 ### 1. Base Score (Static component)
-`baseScoreStatic = 10 * categoryWeight - 0.02 * estimatedMinutes - 0.5 * ageDays`
+`baseScoreStatic = max(0.0, 10 * categoryWeight - 0.5 * ageDays)`
 
 - **High Priority Floor (Rule)**: If `categoryWeight >= 4.0`, the base score is clamped to a minimum of `70.0`:
   `baseScore = max(70.0, baseScoreStatic)`
   Otherwise:
   `baseScore = baseScoreStatic`
 
-### 2. Dynamic Urgency (Time component)
-`dynamicUrgency = 6 * hasDate + 8 * timeUrgency`
+### 2. Dynamic Urgency (Calendar & Scheduling component)
+`dynamicUrgency` is calculated based on strict calendar day hierarchy:
+- **Overdue**: `14.0` points (+6 date + 8 overdue).
+- **Scheduled for Today ("Hoy")**:
+  - If specific time is set: `6.0 + 8.0 * timeUrgency` (up to `14.0` if within 2 hours or overdue).
+  - If no specific time: `10.8` points (`6.0 + 8.0 * 0.6`).
+- **Scheduled for Tomorrow ("Mañana")**: `4.0` points (moderate visibility without competing with today).
+- **Future Scheduled Date**: `2.0` points.
+- **Unscheduled Backlog**: `0.0` points.
 
 ### Variables
 - **categoryWeight**: Float mapped from the task's category and subcategory (see `categories.md`).
 - **hasDate**: Boolean (1 if true, 0 if false).
-- **timeUrgency**: 
-  - If the task has a specific time (`hasTime = true`):
-    - `1.0` if the scheduled time is within the next 2 hours or is overdue (past due).
-    - `0.6` if the scheduled time is within the next 24 hours.
-    - `0.0` otherwise.
-  - If the task only has a date (`hasTime = false`):
-    - `0.6` if the date is "Hoy" (or within the next 24 hours). It remains at `0.6` all day and does not scale to `1.0` to prevent cognitive fatigue and late-night panic.
-    - `0.0` otherwise.
-- **estimatedMinutes**: Integer representing the estimated effort in minutes.
 - **ageDays**: Float representing the number of days since the task was created.
-- **manualBoost**: Float, default `5`. Used for manual pinning or boosting.
+- **manualBoost**: Float, default `0.0` (adjusts in increments of `+10` / `-10`). Used for manual pinning or demoting.
 
-### Rules
-1. **Automatic Projects**: If `estimatedMinutes > 120`, the task is automatically marked as `isProject = true`.
+

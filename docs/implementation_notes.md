@@ -26,9 +26,10 @@ The core tenet of Prima-Focus is privacy and speed.
 - **Notification Thresholds:** Aggressive (Score >= 70), Standard (Score 40-69), Soft (Score < 40).
 
 ## Database & Domain Integration
-- `TaskViewModel` acts as the bridge connecting the Compose UI with Room `TaskDao` and `SessionDao`. It manages dynamic UI states and reads/writes default creation preferences (`SharedPreferences`).
-- **Null Timing (Infinity)**: If `estimatedMinutes` is set to `0` or left blank (falling back to a default of `0`), it is explicitly mapped to `null` before inserting into the database, allowing tasks to have infinite duration.
-- Task priority is calculated deterministically through the `PriorityEngine` before every insertion and periodically by the background worker.
+- **Atomic Task Completion (No Timing)**: Tasks operate as discrete atomic items (Done / Pending) with no duration estimation or timing requirements. Tasks store `estimatedMinutes = null`, and the prioritization engine calculates scores using category weight, calendar day hierarchy, and age decay without duration bias.
+- **Deterministic Multi-Column Ordering**: The SQL query enforces a strict 6-tier order (`priorityScore DESC`, `hasTime DESC`, `CASE WHEN date IS NULL THEN 1 ELSE 0 END`, `date ASC`, `createdAt ASC`, `taskId ASC`), ensuring predictable Top 3 selection and flicker-free tie-breaking.
+- **Relational History Tracking**: Room POJO `TaskWithSessions` pairs completed tasks with their session sentiment and duration in a single `@Transaction` query. When `isHistoryTrackingEnabled` is disabled, timers complete tasks with zero modal friction and history views are hidden.
+- **Storage Access Framework (SAF) Backup**: Serializes `TaskEntity` and `SessionEntity` collections into structured JSON, supporting non-destructive merges (via `updatedAt` LWW) and complete atomic overwrites.
 
 ## Infrastructure & Clean Code
 - **Dependency Management**: We use a central Version Catalog (`libs.versions.toml`) to declare all Gradle dependencies, keeping `build.gradle.kts` files clean and preventing version conflicts.

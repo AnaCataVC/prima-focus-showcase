@@ -112,36 +112,33 @@ A subtle visual hint (e.g., a brief shimmer or bounce animation on first launch)
   - `FilterChip` buttons ("Hoy", "Mañana", "Siguiente Lunes") to instantly set the due date.
   - An "Elegir fecha" `FilterChip` that opens a native `DatePickerDialog`.
   - Tasks without a selected date are sent to the backlog unprogrammed.
-- **Minutes Input**:
-  - `OutlinedTextField` for estimated minutes, with a "Sin duración" `Checkbox` next to it. Checking it disables the input.
+- **Atomic Task Creation**: No time or duration inputs are required; tasks are saved directly as actionable atomic items.
 
 ### Removed from original spec
 - ~~Mic icon / voice input~~ (discarded feature).
 - ~~"Más detalles" accordion~~ — category/subcategory are always visible.
+- ~~Duration chips & minutes input~~ — removed to prevent cognitive fatigue and time estimation friction.
 - ~~Cancelar text button~~ — replaced by swipe-down-to-dismiss.
 
 ---
 
-## Screen 2: Today Task Home
+## Screen 2: Today Multi-Focus Home
 
-**Goal**: show exactly 1 priority task. Zero navigation decisions required.
+**Goal**: Present the Top 3 prioritized tasks with high visual hierarchy and direct atomic completion, plus an expandable cluster for tied priorities.
 
 ### Layout
 - **Background**: `Brush.radialGradient([backgroundCenter → backgroundEdge])` drawn behind the full screen.
-- **Top Bar**: "HOY" label (white 60%) + sync status icon (right). Minimal.
-- **Task Card (center)**: Glass card pattern. Contains:
-  - **Priority Badge (Pill)**: centered at top. Shows `Score: XX`. Error tint if score ≥ 70.
-  - **Project Warning**: Yellow banner stating "Tarea muy larga — divídela en varias partes" if `isProject` is true (estimated > 120m).
-  - **Task Title**: `headlineMedium`, white, max 2 lines with ellipsis.
-  - **Meta Row**: `category - subcategory • XX min` in `textSecondary`.
-  - **Start FAB**: 80dp circle, `primaryAccent` bg, Play icon 40dp. "EMPEZAR" label below (bold, spaced).
-  - **Secondary Actions**: A minimalist row of transparent icon buttons (Editar, Posponer) rendered discreetly under the EMPEZAR label.
-- **Empty State**: centered text "Tu Tarea Hoy aparecerá aquí" at 50% alpha.
-
-### Removed from original spec
-- ~~Subtasks logic entirely removed~~.
-- ~~Day progress (X/Y completadas)~~ — removed to reduce cognitive load.
-- ~~Boost IconButton~~ — replaced by Swipe Right gesture.
+- **Top Bar**: "HOY" label (white 60%, letter-spaced) + sync status icon (right).
+- **Hero Task Card (#1, center)**: Glass card pattern with radial glow. Contains:
+  - **Priority Badge**: Urgente, Alta, Normal, Baja.
+  - **Boost Indicator**: displays active manual boost (e.g., `(+10 boost)` or `(-10 boost)`).
+  - **Task Title**: `headlineSmall`, bold, white, up to 3 lines without truncation.
+  - **Meta Row**: `category - subcategory • Date` in `textSecondary`.
+  - **Expandable Notes**: clean button ("Ver notas" / "Ocultar notas") revealing multiline context without cluttering the initial card view.
+  - **Complete FAB**: 80dp circle, `primaryAccent` bg, Checkmark icon 40dp with "COMPLETAR" label below (bold, spaced) and instant Undo Snackbar support.
+  - **Action Row**: Edit, Snooze, Boost (+10), Anti-Boost (-10), Delete.
+- **Secondary Cards (#2 & #3)**: Compact glass cards with `#2` and `#3` rank badges, direct checkmark completion, expandable notes, and action buttons.
+- **Expandable Tied Priority Cluster**: When subsequent tasks share priority with the 3rd card, a `+N tareas con igual prioridad` banner expands inline.
 
 ---
 
@@ -155,16 +152,15 @@ A subtle visual hint (e.g., a brief shimmer or bounce animation on first launch)
 - **Time display**: `headlineLarge` centered. White.
 - **Task name**: `bodyLarge` above the ring, white 80% alpha.
 - **Controls**: two buttons below ring — Pausa (outline style) and Terminé (`accentGreen`).
-- **Completion**: 600ms confetti animation + open QuickReviewModal.
-
-### Performance Rule (Android Architect)
-The timer counter **must be isolated** from the background layer. Only the text/arc pixels recompose each second. Background renders once per composition using `drawBehind`.
+- **Completion Flow**:
+  - If `isHistoryTrackingEnabled == true`: 600ms celebration + open `QuickReviewModal`.
+  - If `isHistoryTrackingEnabled == false`: Direct task completion with instant return to Home (zero friction).
 
 ---
 
-## Screen 4: Post-Session Quick Review Modal
+## Screen 4: Post-Session Quick Review Modal (Optional)
 
-**Goal**: 2 quick questions. No friction.
+**Goal**: 2 quick reflective questions when History & Review mode is enabled.
 
 ### Layout
 - **Container**: same BottomSheet pattern as Inbox. `scrimColor = Black at 70%`. Drag handle white 30% alpha.
@@ -173,31 +169,37 @@ The timer counter **must be isolated** from the background layer. Only the text/
   - Sí → `accentGreen` when selected.
   - Parcial → `accentOrange` when selected.
   - No → `accentGray` when selected.
-  - Unselected state: `glassSurface` bg + `glassBorderStart` border.
-- **Q2 — Feeling**: 3 EmojiButtons (56dp square). Selected state: `primaryGlow` at 30% bg + `primaryAccent` border.
-- **Conditional Glass Panel** (Parcial/No): glass card appears with "¿Posponer o dividir?" and two text buttons.
-- **Save Button**: full-width 56dp, `primaryAccent`, `RoundedCornerShape(16dp)`. Disabled until both questions answered (`primaryAccent` at 30% alpha when disabled).
+- **Q2 — Feeling**: 3 EmojiButtons (56dp square): 😢 (Mal), 😐 (Normal), 😄 (Bien).
+- **Save Button**: full-width 56dp, `primaryAccent`, `RoundedCornerShape(16dp)`.
 
 ---
 
-## Screen 5: Recurrence and Settings
+## Screen 5: Task List & Completed History Screen
 
-**Goal**: configure priority engine rules. Grouped for clarity.
+**Goal**: comprehensive queue overview with optional completed history.
 
 ### Layout
-- **Background**: same radial gradient.
-- **Title**: "Ajustes", `headlineLarge`, white, left-aligned.
-- **Sections**: each section is a **glass panel** (`GlassCard` pattern, 24dp radius, `glassSurface` bg).
-  1. **Valores por Defecto de Creación**: Scrollable row of `FilterChip` options for default minutes (including "0" for No Time) and default subtasks count.
-  2. **Frecuencia de Notificaciones**: Scrollable row of `FilterChip` options (Apagadas, 15m, 30m, 1h, 2h).
-  3. **Recurrencia por defecto**: FilterChips (Diaria, Semanal, Mensual) — transparent bg, `glassBorderStart` border.
-  4. **Motor de Prioridades**: Auto-split `Switch` + Manual Boost `Slider` inside same panel. Divider between them: `glassBorderStart` 1dp line.
-  5. **Reglas No-Posponibles**: Checkboxes for Salud→Medicación and Trámites→Urgente.
-  6. **Categorías Activas**: List of all master categories with `Switch` controls to hide them from the Inbox.
-- **Custom Controls**:
-  - `Switch`: thumb `primaryAccent`, track `primaryGlow` at 30%, unchecked track/thumb white.
-  - `Checkbox`: checked `primaryAccent`, checkmark white.
-  - `Slider`: thumb `primaryAccent`, active track `primaryGlow`, inactive track `glassSurface`.
+- **Segmented Glassmorphic Tabs (Visible when History is enabled)**:
+  - `[ Pendientes (N) ]` | `[ Historial (M) ]`
+- **Pending Tasks Tab**:
+  - Multi-line titles (up to 3 lines), category badges, expandable notes, Boost (+10), Demote (-10), Edit, Snooze, Delete with 4-second Undo Snackbar.
+- **Completed History Tab**:
+  - Header with total count and "Vaciar Historial" button (opens confirmation dialog).
+  - List of completed task cards displaying completion timestamp (`Hoy, 14:30`), minutes dedicated, sentiment emoji badge (`• 😄`), "Reabrir Tarea" (↩) and Delete actions.
+
+---
+
+## Screen 6: Settings & Local Backup
+
+**Goal**: configure priority rules, notification schedules, local backups, and history modes.
+
+### Sections
+1. **Frecuencia de Notificaciones**: Dropdown selector (Apagadas, 1h 30m, 3h, 5h).
+2. **Modo Desconexión**: Time range picker for quiet hours.
+3. **Categorías Activas**: Switches to show/hide specific categories in Inbox.
+4. **Historial y Revisión de Tareas**: Switch to toggle between Zero-Friction mode and Reflective History mode.
+5. **Copia de Seguridad Local (SAF)**: Exportar JSON and Restaurar JSON buttons (with Merge vs Overwrite dialog).
+6. **Sincronización P2P (Local)**: Local device-to-device sync without internet.
 - **Save Button**: full-width 56dp, `primaryAccent`, `RoundedCornerShape(16dp)`.
 
 ---
