@@ -29,18 +29,18 @@
 
 ### 🚀 Live Demo / Download
 You can download the latest version of the app directly from the [Releases](https://github.com/AnaCataVC/prima-focus-showcase/releases) tab:
-👉 **[Download APK (v1.3.0)](https://github.com/AnaCataVC/prima-focus-showcase/releases/latest)**
+👉 **[Download APK (v1.4.0)](https://github.com/AnaCataVC/prima-focus-showcase/releases/latest)**
 
 ### 🛠️ Technologies Used
 - **Language**: Kotlin
-- **UI Toolkit**: Jetpack Compose (Material Design 3)
+- **UI Toolkit**: Jetpack Compose (Material Design 3) & Jetpack Glance (App Widgets)
 - **Local Persistence**: Room Database (SQLite)
 - **Background Processing**: WorkManager & Foreground Services
 
 ### 🧠 Key Learnings
 This project was a major milestone as it was **my very first time developing a native mobile application**. Throughout the process, I learned how to:
 - Architect and build a complete mobile app from scratch.
-- Master declarative UI design using **Jetpack Compose**.
+- Master declarative UI design using **Jetpack Compose** and home screen widgets with **Jetpack Glance**.
 - Implement local database persistence and migrations using **Room**.
 - Handle complex background tasks and asynchronous notifications using **WorkManager** and **Foreground Services**.
 
@@ -52,6 +52,7 @@ Explore our comprehensive technical documentation to understand how Prima-Focus 
 - [Database Schema](docs/database_schema.sql)
 - [UI Specifications](docs/ui_spec.md)
 - [Implementation Notes](docs/implementation_notes.md)
+- [External References & Widgets](docs/external-references/android-widgets.md)
 - [Learnings & Decisions](docs/learning/)
 
 ---
@@ -63,18 +64,18 @@ Explore our comprehensive technical documentation to understand how Prima-Focus 
 
 ### 🚀 Descarga y Demo
 Puedes descargar la última versión de la aplicación directamente desde la pestaña de [Releases](https://github.com/AnaCataVC/prima-focus-showcase/releases):
-👉 **[Descargar APK (v1.3.0)](https://github.com/AnaCataVC/prima-focus-showcase/releases/latest)**
+👉 **[Descargar APK (v1.4.0)](https://github.com/AnaCataVC/prima-focus-showcase/releases/latest)**
 
 ### 🛠️ Tecnologías Utilizadas
 - **Lenguaje**: Kotlin
-- **Interfaz Gráfica**: Jetpack Compose (Material Design 3)
+- **Interfaz Gráfica**: Jetpack Compose (Material Design 3) y Jetpack Glance (App Widgets)
 - **Persistencia Local**: Base de datos Room (SQLite)
 - **Procesamiento en Segundo Plano**: WorkManager y Foreground Services
 
 ### 🧠 Aprendizajes Clave
 Este proyecto representó un gran hito personal, ya que fue **la primera vez que desarrollé una aplicación móvil nativa**. A lo largo del proceso aprendí a:
 - Diseñar y construir la arquitectura de una app móvil desde cero.
-- Dominar el diseño de interfaces declarativas utilizando **Jetpack Compose**.
+- Dominar el diseño de interfaces declarativas utilizando **Jetpack Compose** y widgets de pantalla de inicio con **Jetpack Glance**.
 - Implementar almacenamiento local y migraciones con **Room**.
 - Manejar tareas complejas en segundo plano y notificaciones asíncronas utilizando **WorkManager** y **Foreground Services**.
 
@@ -86,4 +87,5 @@ Explora nuestra documentación técnica completa para entender cómo funciona Pr
 - [Esquema de Base de Datos](docs/database_schema.sql)
 - [Especificaciones de UI](docs/ui_spec.md)
 - [Notas de Implementación](docs/implementation_notes.md)
+- [Referencias Externas y Widgets](docs/external-references/android-widgets.md)
 - [Aprendizajes y Decisiones](docs/learning/)
