@@ -136,7 +136,7 @@ A subtle visual hint (e.g., a brief shimmer or bounce animation on first launch)
   - **Meta Row**: `category - subcategory • Date` in `textSecondary`.
   - **Expandable Notes**: clean button ("Ver notas" / "Ocultar notas") revealing multiline context without cluttering the initial card view.
   - **Complete FAB**: 80dp circle, `primaryAccent` bg, Checkmark icon 40dp with "COMPLETAR" label below (bold, spaced) and instant Undo Snackbar support.
-  - **Action Row**: Edit, Snooze, Boost (+10), Anti-Boost (-10), Delete.
+  - **Action Row**: Three-group `SpaceBetween` layout — Left: `Edit | Snooze`; Center: `Boost (+10) | Anti-Boost (-10)`; Right: `Delete` (triggers `AlertDialog` confirmation before permanent deletion).
 - **Secondary Cards (#2 & #3)**: Compact glass cards with `#2` and `#3` rank badges, direct checkmark completion, expandable notes, and action buttons.
 - **Expandable Tied Priority Cluster**: When subsequent tasks share priority with the 3rd card, a `+N tareas con igual prioridad` banner expands inline.
 
