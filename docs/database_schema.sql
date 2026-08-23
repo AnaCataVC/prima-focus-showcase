@@ -23,7 +23,10 @@ CREATE TABLE IF NOT EXISTS tasks (
   postponedReason TEXT,
   createdAt INTEGER NOT NULL, -- epoch ms
   updatedAt INTEGER NOT NULL, -- epoch ms (used for P2P Last-Write-Wins conflict resolution)
-  meta TEXT
+  meta TEXT,
+  isDeleted INTEGER NOT NULL DEFAULT 0, -- soft delete tombstone for P2P sync
+  deletedAt INTEGER DEFAULT NULL,       -- epoch ms when deleted
+  syncVersion INTEGER NOT NULL DEFAULT 1 -- incremental version for clock-drift resilience
 );
 
 CREATE INDEX IF NOT EXISTS idx_tasks_today_candidate ON tasks(date, status, priorityScore DESC);
@@ -35,11 +38,13 @@ CREATE TABLE IF NOT EXISTS sessions (
   startAt INTEGER NOT NULL,
   endAt INTEGER,
   mode TEXT,
-  durationMinutes INTEGER,
   result TEXT,
   feeling INTEGER,
   createdAt INTEGER NOT NULL,
   updatedAt INTEGER NOT NULL,
+  isDeleted INTEGER NOT NULL DEFAULT 0,
+  deletedAt INTEGER DEFAULT NULL,
+  syncVersion INTEGER NOT NULL DEFAULT 1,
   FOREIGN KEY(taskId) REFERENCES tasks(taskId) ON DELETE SET NULL
 );
 

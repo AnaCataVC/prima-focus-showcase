@@ -3,17 +3,23 @@
 ## Local-First Strategy & Synchronization
 The core tenet of Prima-Focus is privacy and speed. 
 - All modifications immediately persist to the Room Database (SQLite) on the Android device.
-- There is no cloud synchronization or background syncing queue. No network connection is required to use the app.
-- **Local P2P Sync**: Devices can sync their state offline using the Google Nearby Connections API. Synchronization happens dynamically when devices (e.g., Phone and Tablet) are in proximity.
-- **Conflict Resolution**: Handled via a deterministic "Last-Write-Wins" strategy, utilizing the `updatedAt` timestamp to resolve divergent local states safely.
+- There is no cloud synchronization or remote server dependency. No network connection is required to use the app.
+- **Local P2P Sync**: Devices sync their state offline using the Google Nearby Connections API (`P2P_STAR` topology).
+- **Clock-Drift Resilient LWW**: Conflict resolution compares `syncVersion` first, falling back to `updatedAt` only when versions match. This prevents local clock skew from corrupting newer edits.
+- **Soft Deletes (Tombstones)**: Deletions flag `isDeleted = 1` with a `deletedAt` timestamp and incremented `syncVersion`, preventing deleted tasks from resurrecting when synced against offline peers.
+- **30-Day Tombstone Purge**: The database executes an automatic garbage collection query on application start (`TaskViewModel`), physically deleting tombstones older than 30 days to keep SQLite performant.
+- **P2P Safety Protections**:
+  - `AUTO_TIMEOUT_MS = 45000L`: Discovery and Advertising automatically abort after 45 seconds of inactivity to protect battery life.
+  - `MAX_PAYLOAD_BYTES = 5MB`: Payloads exceeding 5 MB are rejected immediately to prevent heap exhaustion.
+  - `Build.MODEL`: Human-readable device names (capped at 25 chars) are advertised for frictionless peer recognition.
 
-## Recurrence
-- Store rules in `RRULE` format in the `recurrence` field and generate local instances.
-- Upon completing a recurring task, create the next instance based on the rule and save it to the local database.
-
-## Migrations
+## Migrations (v1 -> v5)
 - Strictly version the database schema.
-- Provide migrations in Room using `Migration` classes to handle schema updates without data loss.
+- Provide migrations in Room using `Migration` classes to handle schema updates without data loss:
+  - `MIGRATION_1_2`: Added `recurrenceGroupId` to tasks.
+  - `MIGRATION_2_3`: Removed deprecated `subtasksCount` column via table recreate.
+  - `MIGRATION_3_4`: Removed `durationMinutes` from sessions table.
+  - `MIGRATION_4_5`: Added `isDeleted`, `deletedAt`, and `syncVersion` to both `tasks` and `sessions` tables.
 
 ## UI Implementation & Adaptive Layouts
 - The visual interface is natively built with **Jetpack Compose** following Material 3 guidelines and enforcing a Dark Mode aesthetic.
