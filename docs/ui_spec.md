@@ -169,7 +169,7 @@ A subtle visual hint (e.g., a brief shimmer or bounce animation on first launch)
   - Sí → `accentGreen` when selected.
   - Parcial → `accentOrange` when selected.
   - No → `accentGray` when selected.
-- **Q2 — Feeling**: 3 EmojiButtons (56dp square): 😢 (Mal), 😐 (Normal), 😄 (Bien).
+- **Q2 — Feeling**: 3 EmojiButtons (56dp square): 😐 (Mal), 😊 (Normal), 😁 (Bien).
 - **Save Button**: full-width 56dp, `primaryAccent`, `RoundedCornerShape(16dp)`.
 
 ---
@@ -185,7 +185,7 @@ A subtle visual hint (e.g., a brief shimmer or bounce animation on first launch)
   - Multi-line titles (up to 3 lines), category badges, expandable notes, Boost (+10), Demote (-10), Edit, Snooze, Delete with 4-second Undo Snackbar.
 - **Completed History Tab**:
   - Header with total count and "Vaciar Historial" button (opens confirmation dialog).
-  - List of completed task cards displaying completion timestamp (`Hoy, 14:30`), minutes dedicated, sentiment emoji badge (`• 😄`), "Reabrir Tarea" (↩) and Delete actions.
+  - List of completed task cards displaying completion timestamp (`Hoy, 14:30`), minutes dedicated, sentiment emoji badge (`• 😁`), "Reabrir Tarea" (↩) and Delete actions.
 
 ---
 
