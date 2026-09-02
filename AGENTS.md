@@ -1,36 +1,38 @@
 # AGENTS.md — AI Agent Guidelines & Architecture Manual
 
-This document serves as the operational manual, architecture reference, and workflow guide for AI coding agents operating within the **Prima Focus Showcase** repository.
+This document serves as the operational manual, architecture reference, and workflow guide for AI coding agents operating within the **Prima Focus** repository.
 
 ---
 
 ## 1. Project Overview & Architecture
 
-**Prima Focus Showcase** is the official public landing page and download portal for the **Prima Focus** Android application. It provides interactive feature breakdowns, screenshots, release history, and direct APK download links.
+**Prima Focus** is a native Android Pomodoro & Focus session management application built with **Kotlin**, **Jetpack Compose**, **Room Database**, and **Android Notification Services**. It helps users manage deep work sessions, breaks, task priorities, and productivity statistics.
 
-### Tech Stack:
-- **Markup & Layout**: Semantic HTML5, Vanilla JavaScript for interactive tabs and modals.
-- **Styling**: Tailwind CSS CLI (custom pastel palette, responsive breakpoints, dark/light styling).
-- **Hosting & Deployment**: Vercel / GitHub Pages (Static site).
-- **Public Artifacts (`apk/`)**: Signed release APKs of the Prima Focus Android application for direct download.
+### System Architecture:
+- **`app/android/`**:
+  - `app/src/main/`: Jetpack Compose UI (Timer, Task Manager, Stats, Settings), ViewModels, Room v6 Entities (with soft delete tombstones & `syncVersion`) & DAOs.
+  - `app/build.gradle.kts`: Android SDK configuration (`minSdk = 26`, `targetSdk = 34+`), Compose compiler, and signing configs.
+- **`docs/`**: Comprehensive design documents, database schemas (`database_schema.sql`), notification flow charts (`notification_flow.md`), priority logic, and learning records.
+- **`releases/`**: Compiled APK binaries (`prima-focus-vX.Y.Z.apk`).
 
 ---
 
 ## 2. Directory Structure
 
 ```text
-prima-focus-showcase/
-├── index.html                 # Main landing page markup and interactive logic
-├── src/
-│   └── input.css              # Tailwind CSS entrypoint with custom utility directives
-├── dist/
-│   └── output.css             # Minified, compiled CSS (generated via Tailwind CLI)
-├── apk/                       # Downloadable signed APK releases (e.g., prima-focus-v1.3.0.apk)
-├── assets/                    # Screenshots, logos, mockup graphics, and icons
-├── docs/                      # Synchronized architecture & technical documentation from app
-├── tailwind.config.js         # Tailwind configuration and theme tokens
-├── package.json               # Build scripts & Tailwind CLI dependency
-└── README.md                  # Bilingual project documentation (EN/ES)
+prima-focus/
+├── app/
+│   └── android/                   # Multi-module Kotlin / Gradle project
+│       ├── app/                   # Android native client (Compose UI, Room v6, WorkManager)
+│       ├── desktop/               # Desktop native client (Desktop UI, SQLite JDBC, LAN Sync Server)
+│       ├── shared/                # Core domain (PriorityEngine, models, LWW merge, LAN crypto protocol)
+│       ├── gradle/                # Version catalogs and Gradle wrapper
+│       └── build.gradle.kts       # Root project build script
+├── design/                        # UI wireframes, tokens, and component specifications
+├── docs/                          # Architecture, database schema, and notification guides
+├── releases/                      # Compiled artifacts (gitignored)
+└── README.md                      # Bilingual project documentation (EN/ES, no flag emojis)
+
 ```
 
 ---
@@ -38,48 +40,48 @@ prima-focus-showcase/
 ## 3. Mandatory Agent Rules & Directives
 
 ### 🌐 Language & Communication
-- **Source Code**: HTML structure, JavaScript functions, CSS classes, and comments MUST be in **English**.
-- **User Chat**: Interact with the user in **Spanish** unless explicitly requested otherwise.
+- **Source Code**: All Kotlin code (classes, functions, variables, comments) MUST be in **English**.
+- **User Chat**: Communicate with the user in **Spanish** unless requested otherwise.
 - **Git Commits**: Use **Conventional Commits** in **English** (e.g., `feat: ...`, `fix: ...`, `docs: ...`, `refactor: ...`).
-- **README**: Maintain bilingual documentation (English and Spanish).
+- **README**: Maintain bilingual documentation (English and Spanish) **WITHOUT country flag emojis** (use plain `## English` and `## Español`, never 🇬🇧 or 🇪🇸).
 
 ### 🔒 Security & Privacy
-- **Source Code Protection**: This showcase is a public repository. NEVER copy private Android source code (`/app/src`) from the private app repository. Only copy public release APKs, docs, and assets.
-- **Path Privacy**: NEVER leak local computer paths (e.g., `C:\Users\...`) into HTML, markdown files, or commit logs. Use relative links (`apk/prima-focus-vX.Y.Z.apk`).
+- **Source Code Protection**: This is a private application repository. NEVER leak private source code into public repositories or documentation.
+- **Path Privacy**: NEVER leak absolute user paths (e.g., `C:\Users\...`) into code, documentation, or commit messages. Always use relative paths (`app/android/...`).
 
 ### 💻 PowerShell Environment
-- **Command Chaining**: NEVER use `&&` or `||` in terminal commands. Use `;` or sequential commands.
+- **Command Chaining**: NEVER use `&&` or `||` in terminal commands. Use `;` or separate sequential commands.
 - **GitHub CLI Context**: Switch to personal account `AnaCataVC` (`gh auth switch -u AnaCataVC --hostname github.com 2>$null`).
 
 ---
 
 ## 4. Development & Build Commands (PowerShell)
 
-### Tailwind CSS Compilation
+### Build & Run Tests
 ```powershell
-# Watch mode for local development
-npm run dev
+# Navigate to Android project directory
+cd app/android
 
-# Minified production build
-npm run build:css
+# Run unit tests
+./gradlew testDebugUnitTest
+
+# Run lint checks
+./gradlew lintDebug
+```
+
+### Assemble Production APK
+```powershell
+# Build signed release APK
+cd app/android; ./gradlew assembleRelease
 ```
 
 ---
 
-## 5. UI Verification & Browser Caching Guidelines
+## 5. Showcase Synchronization Protocol
 
-> [!IMPORTANT]
-> **Vanilla HTML & CSS Caching**:
-> When testing UI changes locally after running `npm run build:css`:
-> 1. Open the file directly using the `file:///` protocol in your browser (e.g. `file:///path/to/index.html`) to bypass aggressive HTTP caching.
-> 2. If viewing via local HTTP server (`localhost`), perform a **Hard Refresh** (`Ctrl+F5` / `Cmd+Shift+R`) to ensure `dist/output.css` updates are loaded.
-
----
-
-## 6. Release & Showcase Synchronization Protocol
-
-Whenever a new version of the Prima Focus Android app is compiled:
-1. Copy the signed release APK into `apk/` with semantic naming (e.g. `apk/prima-focus-vX.Y.Z.apk`).
-2. Update the version badges, download button links, and changelog section in `index.html`.
-3. Synchronize any updated architecture documentation into `docs/`.
-4. Run `npm run build:css` to ensure all CSS styles are compiled before committing.
+Whenever significant updates, new releases, or architecture documentation changes are made:
+1. **Showcase Repo Location**: Public showcase repository is hosted at `https://github.com/AnaCataVC/prima-focus-showcase` (sibling directory `../prima-focus-showcase`).
+2. **Version Bump Verification**: Compare release versions against the latest published tag in the public Showcase repository.
+3. **Artifact Transfer**: Copy the signed release APK (`app-release.apk`) to `../prima-focus-showcase/apk/` renamed to `prima-focus-vX.Y.Z.apk`.
+4. **Documentation Synchronization**: Copy any updated architectural guides or database schemas from `docs/` to `../prima-focus-showcase/docs/`.
+5. **Zero Source Code Leaks**: NEVER copy raw source code (`/app`) to the public Showcase repository.

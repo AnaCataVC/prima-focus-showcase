@@ -1,25 +1,30 @@
 # Implementation Notes
 
 ## Local-First Strategy & Synchronization
-The core tenet of Prima-Focus is privacy and speed. 
-- All modifications immediately persist to the Room Database (SQLite) on the Android device.
-- There is no cloud synchronization or remote server dependency. No network connection is required to use the app.
+The core tenet of Prima-Focus is privacy, speed, and device independence.
+- All modifications immediately persist to the local Room Database v6 (SQLite) on Android or SQLite JDBC on Desktop.
+- There is no cloud synchronization or remote server dependency. No internet connection is required.
 - **Local P2P Sync**: Devices sync their state offline using the Google Nearby Connections API (`P2P_STAR` topology).
+- **Local LAN Sync**: Android and Desktop companion synchronize over local Wi-Fi via `DesktopSyncServer` (HTTP/JSON port 8765) and `LanSyncClient`, secured with SHA-256 PIN hashing and HMAC-SHA256 payload signatures.
+- **Host / Client Selection**:
+  - Android Nearby: Users explicitly toggle between "Ser Anfitrión" (Host / Advertising) and "Ser Cliente" (Client / Discovery).
+  - Desktop LAN: Desktop serves as Host; Android connects as Client using the displayed IP and 6-digit PIN.
 - **Clock-Drift Resilient LWW**: Conflict resolution compares `syncVersion` first, falling back to `updatedAt` only when versions match. This prevents local clock skew from corrupting newer edits.
 - **Soft Deletes (Tombstones)**: Deletions flag `isDeleted = 1` with a `deletedAt` timestamp and incremented `syncVersion`, preventing deleted tasks from resurrecting when synced against offline peers.
 - **30-Day Tombstone Purge**: The database executes an automatic garbage collection query on application start (`TaskViewModel`), physically deleting tombstones older than 30 days to keep SQLite performant.
-- **P2P Safety Protections**:
+- **P2P & LAN Safety Protections**:
   - `AUTO_TIMEOUT_MS = 45000L`: Discovery and Advertising automatically abort after 45 seconds of inactivity to protect battery life.
   - `MAX_PAYLOAD_BYTES = 5MB`: Payloads exceeding 5 MB are rejected immediately to prevent heap exhaustion.
-  - `Build.MODEL`: Human-readable device names (capped at 25 chars) are advertised for frictionless peer recognition.
+  - Rate Limiting: Desktop sync server locks pairing for 30 seconds after 5 failed PIN attempts and rotates the PIN automatically.
 
-## Migrations (v1 -> v5)
+## Migrations (v1 -> v6)
 - Strictly version the database schema.
 - Provide migrations in Room using `Migration` classes to handle schema updates without data loss:
   - `MIGRATION_1_2`: Added `recurrenceGroupId` to tasks.
   - `MIGRATION_2_3`: Removed deprecated `subtasksCount` column via table recreate.
-  - `MIGRATION_3_4`: Removed `durationMinutes` from sessions table.
-  - `MIGRATION_4_5`: Added `isDeleted`, `deletedAt`, and `syncVersion` to both `tasks` and `sessions` tables.
+  - `MIGRATION_3_4`: Removed `durationMinutes` from sessions table via table recreate.
+  - `MIGRATION_4_5`: Added `isDeleted`, `deletedAt`, and `syncVersion` to both `tasks` and `sessions` tables for distributed sync.
+  - `MIGRATION_5_6`: Dropped the unused `events` dead table (`DROP TABLE IF EXISTS events`).
 
 ## UI Implementation & Adaptive Layouts
 - The visual interface is natively built with **Jetpack Compose** following Material 3 guidelines and enforcing a Dark Mode aesthetic.
@@ -38,5 +43,5 @@ The core tenet of Prima-Focus is privacy and speed.
 - **Storage Access Framework (SAF) Backup**: Serializes `TaskEntity` and `SessionEntity` collections into structured JSON, supporting non-destructive merges (via `updatedAt` LWW) and complete atomic overwrites.
 
 ## Infrastructure & Clean Code
-- **Dependency Management**: We use a central Version Catalog (`libs.versions.toml`) to declare all Gradle dependencies, keeping `build.gradle.kts` files clean and preventing version conflicts.
-- **Constants & Utilities**: "Magic strings" (like SharedPreferences keys or Notification Channel IDs) are strictly avoided. They are centralized in `Constants.kt`. Shared mathematical or date/time logic is extracted to pure functions in `TimeUtils.kt`.
+- **Dependency Management**: Central Version Catalog (`libs.versions.toml`) manages all Gradle dependencies, keeping `build.gradle.kts` files clean and preventing version conflicts.
+- **Constants & Utilities**: "Magic strings" are strictly centralized in `Constants.kt`. Shared mathematical or date/time logic is extracted to pure functions in `TimeUtils.kt`.
