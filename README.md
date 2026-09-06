@@ -6,7 +6,7 @@
 <div align="center">
   <img src="https://img.shields.io/badge/Platform-Android%20%7C%20Desktop%20(PC)-3DDC84?style=flat&logo=android" alt="Platform Android & Desktop">
   <img src="https://img.shields.io/badge/Architecture-Local--First%20(KMP)-blue?style=flat" alt="Architecture Local-First">
-  <img src="https://img.shields.io/badge/Room-v5%20%2B%20SQLite%20JDBC-4285F4?style=flat&logo=sqlite&logoColor=white" alt="Room v5 and SQLite JDBC">
+  <img src="https://img.shields.io/badge/Room-v6%20%2B%20SQLite%20JDBC-4285F4?style=flat&logo=sqlite&logoColor=white" alt="Room v6 and SQLite JDBC">
   <img src="https://img.shields.io/badge/Kotlin-Multiplatform%202.2.10-0095D5?style=flat&logo=kotlin&logoColor=white" alt="Kotlin Multiplatform">
   <img src="https://img.shields.io/badge/Compose-Multiplatform%20Ready-4285F4?style=flat&logo=android&logoColor=white" alt="Compose Multiplatform">
   <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License MIT">
@@ -32,14 +32,14 @@ You can download the latest Android application directly from the [Releases](htt
 👉 **[Download APK (Android)](https://github.com/AnaCataVC/prima-focus-showcase/releases/latest)**
 
 ### 🛠️ Technologies Used
-- **Flagship Mobile Client**: Android Native, Jetpack Compose (Material Design 3), Jetpack Glance (App Widgets), Room Database v5, WorkManager & Foreground Services.
+- **Flagship Mobile Client**: Android Native, Jetpack Compose (Material Design 3), Jetpack Glance (App Widgets), Room Database v6, WorkManager & Foreground Services.
 - **Companion Desktop Client & Core**: Kotlin Multiplatform (Kotlin 2.2.10), SQLite JDBC, Embedded HTTP Sync Server, HMAC-SHA256 & SHA-256 PIN Hashing.
 
 
 ### 🧠 Key Learnings
 This project was a major engineering and architectural milestone. Throughout the process, I learned how to:
 - Architect and build a modular **Kotlin Multiplatform (KMP)** system with decoupled shared domain logic.
-- Implement independent local databases on mobile (**Room v5**) and desktop (**SQLite JDBC**).
+- Implement independent local databases on mobile (**Room v6**) and desktop (**SQLite JDBC**).
 - Design and red-team stress-test local network protocols with cryptographic authentication (HMAC/PIN).
 - Handle clock-drift resilience, soft-delete tombstones, and garbage collection in distributed local-first systems.
 - Master declarative UI design using **Jetpack Compose** and home screen widgets with **Jetpack Glance**.
@@ -69,14 +69,14 @@ Puedes descargar la última versión de la aplicación para Android directamente
 👉 **[Descargar APK (Android)](https://github.com/AnaCataVC/prima-focus-showcase/releases/latest)**
 
 ### 🛠️ Tecnologías Utilizadas
-- **Aplicación Móvil Principal**: Android Nativo, Jetpack Compose (Material Design 3), Jetpack Glance (App Widgets), Room Database v5, WorkManager y Foreground Services.
+- **Aplicación Móvil Principal**: Android Nativo, Jetpack Compose (Material Design 3), Jetpack Glance (App Widgets), Room Database v6, WorkManager y Foreground Services.
 - **Cliente Companion de Escritorio y Núcleo**: Kotlin Multiplatform (Kotlin 2.2.10), SQLite JDBC, Servidor HTTP Embebido, HMAC-SHA256 y Hash SHA-256 para PIN.
 
 
 ### 🧠 Aprendizajes Clave
 Este proyecto representó un gran hito de ingeniería y arquitectura. A lo largo del proceso aprendí a:
 - Diseñar y construir una arquitectura modular en **Kotlin Multiplatform (KMP)** con capa de dominio desacoplada.
-- Implementar bases de datos locales independientes en móvil (**Room v5**) y escritorio (**SQLite JDBC**).
+- Implementar bases de datos locales independientes en móvil (**Room v6**) y escritorio (**SQLite JDBC**).
 - Diseñar y someter a auditoría *Red Team* protocolos de red local protegidos con firmas criptográficas (HMAC/PIN).
 - Resolver desafíos de *Clock Drift*, lápidas tombstones y recolección de basura en sistemas distribuidos *local-first*.
 - Dominar el diseño de interfaces declarativas con **Jetpack Compose** y widgets con **Jetpack Glance**.
