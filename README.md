@@ -12,9 +12,13 @@
   <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License MIT">
 </div>
 
-<br>
-
-> **Note**: This repository serves as a **Showcase**. The complete source code is kept private, but you can explore the technical documentation and try the app yourself!
+> [!IMPORTANT]
+> **Repository Migrated & Archived / Repositorio Migrado y Archivado**
+>
+> The source code and official releases for **Prima-Focus** are now publicly available at the official repository:
+> 👉 **[github.com/AnaCataVC/prima-focus](https://github.com/AnaCataVC/prima-focus)**
+>
+> Este repositorio showcase ha sido archivado. Puedes consultar todo el código fuente, arquitectura KMP y releases actualizados en el enlace superior.
 
 <div align="center">
   <a href="#english">English</a> | <a href="#español">Español</a>
